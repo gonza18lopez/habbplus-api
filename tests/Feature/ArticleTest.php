@@ -55,7 +55,6 @@ class ArticleTest extends TestCase
 			->assertStatus(200)
 			->assertJsonStructure([
 				'title',
-				'image',
 				'body',
 				'category' => [
 					'name',
