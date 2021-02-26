@@ -41,4 +41,45 @@ class ArticleTest extends TestCase
 				'meta'
 			]);
 	}
+
+	/**
+	 * Get a single article
+	 * 
+	 * @return void
+	 */
+	public function test_get_single_article()
+	{
+		$response = $this->getJson('/api/articles/1');
+
+		$response
+			->assertStatus(200)
+			->assertJsonStructure([
+				'title',
+				'image',
+				'body',
+				'category' => [
+					'name',
+					'prefix',
+					'color'
+				],
+				'user' => [
+					'id',
+					'name',
+					'figure'
+				],
+				'comments' => [
+					[
+						'id',
+						'user' => [
+							'id',
+							'name',
+							'figure'
+						],
+						'message',
+						'createdAt'
+					]
+				],
+				'createdAt'
+			]);
+	}
 }

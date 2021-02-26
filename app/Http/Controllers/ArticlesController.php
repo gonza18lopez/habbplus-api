@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Http\Resources\AllArticlesResource;
+use App\Http\Resources\ArticleResource;
 use Illuminate\Http\Request;
 
 class ArticlesController extends Controller
@@ -16,7 +17,7 @@ class ArticlesController extends Controller
 	public function index()
 	{
 		return AllArticlesResource::collection(
-			Article::with('user')->with('category')->with('comments')->paginate(15)
+			Article::with('user')->with('category')->with('comments')->paginate(10)
 		);
 	}
 
@@ -39,7 +40,11 @@ class ArticlesController extends Controller
 	 */
 	public function show(Article $article)
 	{
-		//
+		return response()->json(
+			new ArticleResource(
+				$article
+			)
+		);
 	}
 
 	/**

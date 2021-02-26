@@ -26,10 +26,10 @@ class ArticleFactory extends Factory
         return [
             'user_id' => User::factory(),
             'category_id' => Category::factory(),
-            'title' => $this->faker->title,
-            'description' => $this->faker->paragraph,
-            'image' => 'http://habbplus.fr/storage/thumbnails/post/2UDyHNa9Wtc6V3crZPVruiRo9JvtIWvXlC0ktcJh.png',
-            'body' => $this->faker->paragraph
+            'title' => $this->faker->sentence(3),
+            'description' => $this->faker->paragraph(7),
+            'image' => 'http://habbplus.fr/storage/thumbnails/post/vsDgzhEYDwbmmqv8YYn9tYOYjpj0g9cyeoSawRI0.png',
+            'body' => $this->faker->paragraph(20)
         ];
     }
 }
