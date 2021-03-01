@@ -18,7 +18,7 @@ class AllArticlesResource extends JsonResource
 			'id' => $this->id,
 			'title' => $this->title,
 			'description' => $this->description,
-			'image' => $this->image,
+			'image' => asset($this->image),
 			'user' => [
 				'name' => $this->user->name
 			],

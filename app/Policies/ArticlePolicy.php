@@ -16,7 +16,7 @@ class ArticlePolicy
      * @param  \App\Models\User  $user
      * @return mixed
      */
-    public function viewAny(User $user = null)
+    public function viewAny(?User $user)
     {
         return true;
     }
@@ -28,7 +28,7 @@ class ArticlePolicy
      * @param  \App\Models\Article  $article
      * @return mixed
      */
-    public function view(User $user = null, Article $article)
+    public function view(?User $user, Article $article)
     {
         return true;
     }
@@ -41,7 +41,7 @@ class ArticlePolicy
      */
     public function create(User $user)
     {
-        return $user->hasRole('publish articles');
+        return $user->can('publish articles');
     }
 
     /**
@@ -53,7 +53,7 @@ class ArticlePolicy
      */
     public function update(User $user, Article $article)
     {
-        return $user->hasRole('edit articles');
+        return $user->can('edit articles');
     }
 
     /**
@@ -65,7 +65,7 @@ class ArticlePolicy
      */
     public function delete(User $user, Article $article)
     {
-        return $user->hasRole('unpublish articles');
+        return $user->can('unpublish articles');
     }
 
     /**
@@ -77,7 +77,7 @@ class ArticlePolicy
      */
     public function restore(User $user, Article $article)
     {
-        return $user->hasRole('publish articles');
+        return $user->can('publish articles');
     }
 
     /**
@@ -89,6 +89,6 @@ class ArticlePolicy
      */
     public function forceDelete(User $user, Article $article)
     {
-        return $user->hasRole('unpublish articles');
+        return $user->can('delete articles');
     }
 }

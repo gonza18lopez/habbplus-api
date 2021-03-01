@@ -28,7 +28,7 @@ class ArticleFactory extends Factory
             'category_id' => Category::factory(),
             'title' => $this->faker->sentence(3),
             'description' => $this->faker->paragraph(7),
-            'image' => 'http://habbplus.fr/storage/thumbnails/post/vsDgzhEYDwbmmqv8YYn9tYOYjpj0g9cyeoSawRI0.png',
+            'image' => 'storage/thumbnails/vsDgzhEYDwbmmqv8YYn9tYOYjpj0g9cyeoSawRI0.png',
             'body' => $this->faker->paragraph(20)
         ];
     }

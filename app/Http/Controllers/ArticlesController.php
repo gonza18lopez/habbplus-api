@@ -6,6 +6,8 @@ use App\Models\Article;
 use App\Http\Resources\AllArticlesResource;
 use App\Http\Resources\ArticleResource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class ArticlesController extends Controller
 {
@@ -16,6 +18,8 @@ class ArticlesController extends Controller
 	 */
 	public function __construct()
 	{
+		$this->middleware('auth:sanctum')->except([ 'index', 'show' ]);
+		
 		$this->authorizeResource(Article::class, 'article');
 	}
 	
@@ -27,7 +31,7 @@ class ArticlesController extends Controller
 	public function index()
 	{
 		return AllArticlesResource::collection(
-			Article::with('user')->with('category')->with('comments')->paginate(10)
+			Article::with('user')->with('category')->with('comments')->orderBy('id', 'desc')->paginate(10)
 		);
 	}
 
@@ -39,7 +43,25 @@ class ArticlesController extends Controller
 	 */
 	public function store(Request $request)
 	{
-		//
+		$request->validate([
+			'title' => 'required|min:4',
+			'description' => 'required|min:50',
+			'body' => 'required',
+			'image' => 'required|image',
+			'category' => 'required|exists:categories,id'
+		]);
+
+		$path = $request->file('image')->store('thumbnails', 'public');
+
+		$article = $request->user()->articles()->create([
+			'title' => $request->title,
+			'description' => $request->description,
+			'body' => $request->body,
+			'image' => "storage/$path",
+			'category_id' => $request->category
+		]);
+
+		return response()->json(new AllArticlesResource($article), 201);
 	}
 
 	/**
@@ -66,7 +88,22 @@ class ArticlesController extends Controller
 	 */
 	public function update(Request $request, Article $article)
 	{
-		//
+		$request->validate([
+			'title' => 'sometimes|required|min:4',
+			'description' => 'sometimes|required|min:50',
+			'body' => 'sometimes|required|min:50',
+			'image' => 'sometimes|required|image',
+			'category' => 'sometimes|required|exists:categories,id'
+		]);
+
+		$article->fill($request->all());
+		$article->save();
+
+		return response()->json(
+			new AllArticlesResource(
+				$article
+			)
+		);
 	}
 
 	/**
@@ -77,6 +114,10 @@ class ArticlesController extends Controller
 	 */
 	public function destroy(Article $article)
 	{
-		//
+		$article->delete();
+
+		return response()->json([
+			'deleted' => true
+		]);
 	}
 }

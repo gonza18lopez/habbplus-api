@@ -22,6 +22,7 @@ class CreateArticlesTable extends Migration
 			$table->mediumText('description');
 			$table->longText('body');
 			$table->timestamps();
+			$table->softDeletes();
 		});
 	}
 
