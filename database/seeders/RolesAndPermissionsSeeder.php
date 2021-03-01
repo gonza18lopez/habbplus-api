@@ -18,17 +18,34 @@ class RolesAndPermissionsSeeder extends Seeder
 		// Reset cached roles and permissions
 		app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
-		// create permissions
+		// animators permissions
+		Permission::create(['name' => 'create events']);
+		Permission::create(['name' => 'edit events']);
+		Permission::create(['name' => 'delete events']);
+
+		// articles permissions
+        Permission::create(['name' => 'create articles']);
 		Permission::create(['name' => 'edit articles']);
+        Permission::create(['name' => 'restore articles']);
+        Permission::create(['name' => 'trash articles']);
         Permission::create(['name' => 'delete articles']);
-        Permission::create(['name' => 'publish articles']);
-        Permission::create(['name' => 'unpublish articles']);
+
+		// categories permissions
+		Permission::create(['name' => 'create category']);
+		Permission::create(['name' => 'edit category']);
+		Permission::create(['name' => 'delete category']);
 
 		// create roles and assign created permissions
-		$role = Role::create(['name' => 'journalist']);
-		$role->givePermissionTo([ 'edit articles', 'delete articles', 'publish articles', 'unpublish articles' ]);
+		$animator = Role::create(['name' => 'animator']);
+		$animator->givePermissionTo([ 'create events', 'edit events' ]);
+
+		$journalist = Role::create(['name' => 'journalist']);
+		$journalist->givePermissionTo([ 'create articles', 'edit articles', 'trash articles' ]);
+
+		$moderator = Role::create(['name' => 'journalists managers']);
+		$moderator->givePermissionTo([ 'create articles', 'edit articles', 'delete articles', 'restore articles', 'trash articles', 'create category', 'edit category', 'delete category' ]);
 
 		$role = Role::create(['name' => 'super-admin']);
-		$role->givePermissionTo(Permission::all());
+		$role->givePermissionTo( Permission::all() );
 	}
 }

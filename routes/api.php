@@ -24,7 +24,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 /**
  * Define api resources
  */
-
 Route::apiResources([
     'articles' => ArticlesController::class,
     'categories' => CategoriesController::class

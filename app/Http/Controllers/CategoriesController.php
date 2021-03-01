@@ -3,62 +3,108 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Http\Resources\AllArticlesResource;
+use App\Http\Resources\AllCategoriesResource;
+use App\Http\Resources\CategoryResource;
 use Illuminate\Http\Request;
 
 class CategoriesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
+	/**
+	 * Create the controller instance.
+	 *
+	 * @return void
+	 */
+	public function __construct()
+	{
+		$this->middleware('auth:sanctum')->except([ 'index', 'show' ]);
+		
+		$this->authorizeResource(Category::class, 'category');
+	}
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function index()
+	{
+		return response()->json(
+			AllCategoriesResource::collection(
+				Category::all()
+			)
+		);
+	}
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Category $category)
-    {
-        //
-    }
+	/**
+	 * Store a newly created resource in storage.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @return \Illuminate\Http\Response
+	 */
+	public function store(Request $request)
+	{
+		$request->validate([
+			'name' => 'required|min:4',
+			'prefix' => 'required|min:2',
+			'color' => 'required'
+		]);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Category $category)
-    {
-        //
-    }
+		$category = new Category;
+		$category->fill($request->all());
+		$category->save();
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Category $category)
-    {
-        //
-    }
+		return response()->json(
+			new CategoryResource($category), 201
+		);
+	}
+
+	/**
+	 * Display the specified resource.
+	 *
+	 * @param  \App\Models\Category  $category
+	 * @return \Illuminate\Http\Response
+	 */
+	public function show(Category $category)
+	{
+		return AllArticlesResource::collection(
+			$category->articles()->with('user')->with('category')->with('comments')->orderBy('id', 'desc')->paginate(10)
+		);
+	}
+
+	/**
+	 * Update the specified resource in storage.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @param  \App\Models\Category  $category
+	 * @return \Illuminate\Http\Response
+	 */
+	public function update(Request $request, Category $category)
+	{
+		$request->validate([
+			'name' => 'sometimes|required|min:4',
+			'prefix' => 'sometimes|required|min:2',
+			'color' => 'sometimes|required'
+		]);
+
+		$category->fill($request->all());
+		$category->save();
+
+		return response()->json(
+			new CategoryResource($category)
+		);
+	}
+
+	/**
+	 * Remove the specified resource from storage.
+	 *
+	 * @param  \App\Models\Category  $category
+	 * @return \Illuminate\Http\Response
+	 */
+	public function destroy(Category $category)
+	{
+		$category->delete();
+
+		return response()->noContent();
+	}
 }

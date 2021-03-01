@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Article;
+use App\Models\Category;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class ArticlePolicy
+class CategoryPolicy
 {
     use HandlesAuthorization;
 
@@ -25,10 +25,10 @@ class ArticlePolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Article  $article
+     * @param  \App\Models\Category  $category
      * @return mixed
      */
-    public function view(?User $user, Article $article)
+    public function view(?User $user, Category $category)
     {
         return true;
     }
@@ -41,54 +41,54 @@ class ArticlePolicy
      */
     public function create(User $user)
     {
-        return $user->can('create articles');
+        return $user->can('create category');
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Article  $article
+     * @param  \App\Models\Category  $category
      * @return mixed
      */
-    public function update(User $user, Article $article)
+    public function update(User $user, Category $category)
     {
-        return $user->can('edit articles');
+        return $user->can('edit category');
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Article  $article
+     * @param  \App\Models\Category  $category
      * @return mixed
      */
-    public function delete(User $user, Article $article)
+    public function delete(User $user, Category $category)
     {
-        return $user->can('trash articles');
+        return $user->can('delete category');
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Article  $article
+     * @param  \App\Models\Category  $category
      * @return mixed
      */
-    public function restore(User $user, Article $article)
+    public function restore(User $user, Category $category)
     {
-        return $user->can('restore articles');
+        //
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Article  $article
+     * @param  \App\Models\Category  $category
      * @return mixed
      */
-    public function forceDelete(User $user, Article $article)
+    public function forceDelete(User $user, Category $category)
     {
-        return $user->can('delete articles');
+        //
     }
 }

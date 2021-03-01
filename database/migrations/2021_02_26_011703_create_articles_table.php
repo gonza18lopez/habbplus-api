@@ -21,6 +21,9 @@ class CreateArticlesTable extends Migration
 			$table->string('image');
 			$table->mediumText('description');
 			$table->longText('body');
+			$table->smallInteger('status')->default(0);
+			$table->integer('moderated_by')->nullable()->unsigned();
+			$table->dateTime('moderated_at')->nullable();
 			$table->timestamps();
 			$table->softDeletes();
 		});
