@@ -12,6 +12,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Tests\TestCase;
+use Illuminate\Support\Facades\Log;
 
 class ArticleTest extends TestCase
 {
@@ -58,11 +59,12 @@ class ArticleTest extends TestCase
 	 */
 	public function test_get_single_article()
 	{
-		$response = $this->getJson('/api/articles/1');
+		$response = $this->getJson("/api/articles/1");
 
 		$response
 			->assertStatus(200)
 			->assertJsonStructure([
+				'id',
 				'title',
 				'body',
 				'category' => [
@@ -133,7 +135,7 @@ class ArticleTest extends TestCase
 		$file = UploadedFile::fake()->image('thumnail-' . Str::random(25) . '.jpg');
 
 		// assign user permissions
-		$user->assignRole('journalist');
+		$user->assignRole('journalists managers');
 
 		Sanctum::actingAs($user);
 
@@ -209,7 +211,7 @@ class ArticleTest extends TestCase
 		$file = UploadedFile::fake()->image('thumnail-' . Str::random(25) . '.jpg');
 
 		// assign user permissions
-		$user->assignRole('journalist');
+		$user->assignRole('journalists managers');
 
 		Sanctum::actingAs($user);
 
@@ -251,7 +253,7 @@ class ArticleTest extends TestCase
 		$article = Article::factory()->create();
 
 		// assign user permissions
-		$user->assignRole('journalist');
+		$user->assignRole('journalists managers');
 
 		Sanctum::actingAs($user);
 

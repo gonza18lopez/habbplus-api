@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Category;
 use App\Models\Article;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Carbon\Carbon;
 
 class ArticleFactory extends Factory
 {
@@ -29,7 +30,10 @@ class ArticleFactory extends Factory
             'title' => $this->faker->sentence(3),
             'description' => $this->faker->paragraph(7),
             'image' => 'storage/thumbnails/vsDgzhEYDwbmmqv8YYn9tYOYjpj0g9cyeoSawRI0.png',
-            'body' => $this->faker->paragraph(20)
+            'body' => $this->faker->paragraph(20),
+            'status' => 1,
+            'moderated_at' => Carbon::now(),
+            'moderated_by' => 1
         ];
     }
 }

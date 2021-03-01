@@ -26,6 +26,7 @@ class RolesAndPermissionsSeeder extends Seeder
 		// articles permissions
         Permission::create(['name' => 'create articles']);
 		Permission::create(['name' => 'edit articles']);
+        Permission::create(['name' => 'moderate articles']);
         Permission::create(['name' => 'restore articles']);
         Permission::create(['name' => 'trash articles']);
         Permission::create(['name' => 'delete articles']);
@@ -43,7 +44,7 @@ class RolesAndPermissionsSeeder extends Seeder
 		$journalist->givePermissionTo([ 'create articles', 'edit articles', 'trash articles' ]);
 
 		$moderator = Role::create(['name' => 'journalists managers']);
-		$moderator->givePermissionTo([ 'create articles', 'edit articles', 'delete articles', 'restore articles', 'trash articles', 'create category', 'edit category', 'delete category' ]);
+		$moderator->givePermissionTo([ 'create articles', 'edit articles', 'delete articles', 'moderate articles', 'restore articles', 'trash articles', 'create category', 'edit category', 'delete category' ]);
 
 		$role = Role::create(['name' => 'super-admin']);
 		$role->givePermissionTo( Permission::all() );

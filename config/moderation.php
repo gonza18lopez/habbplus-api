@@ -23,7 +23,7 @@ return array(
     | here the name of the column.
     | REMEMBER to migrate the database to add this column.
     */
-    'moderated_by_column' => null,
+    'moderated_by_column' => 'moderated_by',
 
     /*
     |--------------------------------------------------------------------------

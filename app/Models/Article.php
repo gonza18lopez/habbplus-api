@@ -5,11 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Hootlex\Moderation\Moderatable;
 
 class Article extends Model
 {
 	use HasFactory,
-		SoftDeletes;
+		SoftDeletes,
+		Moderatable;
 
 	/**
 	 * The attributes that are mass assignable.
@@ -22,7 +24,9 @@ class Article extends Model
 		'body',
 		'image',
 		'user_id',
-		'category_id'
+		'category_id',
+		'moderated_at',
+		'status'
 	];
 
 	public function user()

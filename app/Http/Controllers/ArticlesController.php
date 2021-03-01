@@ -61,6 +61,11 @@ class ArticlesController extends Controller
 			'category_id' => $request->category
 		]);
 
+		if ($request->user()->can('moderate articles'))
+			$article->markApproved();
+		else
+			$article->markPending();
+
 		return response()->json(new AllArticlesResource($article), 201);
 	}
 
