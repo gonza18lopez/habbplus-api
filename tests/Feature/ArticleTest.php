@@ -104,7 +104,7 @@ class ArticleTest extends TestCase
 
 		$user = User::factory()->create();
 		$category = Category::factory()->create();
-		$file = UploadedFile::fake()->image('thumnail.jpg');
+		$file = UploadedFile::fake()->image('thumnail.jpg', 143, 88);
 
 		Sanctum::actingAs($user);
 
@@ -132,7 +132,7 @@ class ArticleTest extends TestCase
 		// create entities
 		$user = User::factory()->create();
 		$category = Category::factory()->create();
-		$file = UploadedFile::fake()->image('thumnail-' . Str::random(25) . '.jpg');
+		$file = UploadedFile::fake()->image('thumnail-' . Str::random(25) . '.jpg', 143, 88);
 
 		// assign user permissions
 		$user->assignRole('journalists managers');
@@ -178,7 +178,7 @@ class ArticleTest extends TestCase
 		// create entities
 		$user = User::factory()->create();
 		$article = Article::factory()->create();
-		$file = UploadedFile::fake()->image('thumnail-' . Str::random(25) . '.jpg');
+		$file = UploadedFile::fake()->image('thumnail-' . Str::random(25) . '.jpg', 143, 88);
 
 		Sanctum::actingAs($user);
 
@@ -208,7 +208,7 @@ class ArticleTest extends TestCase
 		// create entities
 		$user = User::factory()->create();
 		$article = Article::factory()->create();
-		$file = UploadedFile::fake()->image('thumnail-' . Str::random(25) . '.jpg');
+		$file = UploadedFile::fake()->image('thumnail-' . Str::random(25) . '.jpg', 143, 88);
 
 		// assign user permissions
 		$user->assignRole('journalists managers');

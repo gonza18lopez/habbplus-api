@@ -43,4 +43,9 @@ class Article extends Model
 	{
 		return $this->morphMany(Comment::class, 'comment');
 	}
+
+	public function animation()
+	{
+		return $this->morphOne(Animation::class, 'animatable');
+	}
 }
