@@ -42,7 +42,13 @@ class Animation extends Model
 		'start_at' => 'datetime',
 		'finish_at' => 'datetime'
 	];
-
+	
+	/**
+	 * Returns the Animations grouped by their column "start_at"
+	 * where the date is not passed
+	 * 
+	 * @return collection
+	 */
 	public static function byDate()
 	{
 		return self::get()->filter(function($value, $key) {
@@ -52,11 +58,21 @@ class Animation extends Model
 		});
 	}
 
+	/**
+	 * Get the users that owns the Animation
+	 * 
+	 * @return User
+	 */
 	public function user()
 	{
 		return $this->belongsTo(User::class);
 	}
 
+	/**
+	 * Create polymorphic relation to target
+	 * 
+	 * @return mixed
+	 */
 	public function target()
 	{
 		return $this->morphTo();
