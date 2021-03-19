@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Http\Resources\AllArticlesResource;
 use App\Http\Resources\AllCategoriesResource;
 use App\Http\Resources\CategoryResource;
+use App\Http\Requests\Category\CreateRequest;
 use Illuminate\Http\Request;
 
 class CategoriesController extends Controller
@@ -39,20 +40,12 @@ class CategoriesController extends Controller
 	/**
 	 * Store a newly created resource in storage.
 	 *
-	 * @param  \Illuminate\Http\Request  $request
+	 * @param  \App\Http\Requests\Category\CreateRequest  $request
 	 * @return \Illuminate\Http\Response
 	 */
-	public function store(Request $request)
+	public function store(CreateRequest $request)
 	{
-		$request->validate([
-			'name' => 'required|min:4',
-			'prefix' => 'required|min:2',
-			'color' => 'required'
-		]);
-
-		$category = new Category;
-		$category->fill($request->all());
-		$category->save();
+		$category = Category::create($request->validated());
 
 		return response()->json(
 			new CategoryResource($category), 201

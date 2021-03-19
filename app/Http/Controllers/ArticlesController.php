@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Article;
 use App\Http\Resources\AllArticlesResource;
 use App\Http\Resources\ArticleResource;
+use App\Http\Requests\Article\CreateRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
@@ -38,28 +39,14 @@ class ArticlesController extends Controller
 	/**
 	 * Store a newly created resource in storage.
 	 *
-	 * @param  \Illuminate\Http\Request  $request
+	 * @param  \App\Http\Requests\Article\CreateRequest  $request
 	 * @return \Illuminate\Http\Response
 	 */
-	public function store(Request $request)
+	public function store(CreateRequest $request)
 	{
-		$request->validate([
-			'title' => 'required|min:4',
-			'description' => 'required|min:50',
-			'body' => 'required',
-			'image' => 'required|image',
-			'category' => 'required|exists:categories,id'
-		]);
+		$path = 'storage' . $request->file('image')->store('thumbnails', 'public');
 
-		$path = $request->file('image')->store('thumbnails', 'public');
-
-		$article = $request->user()->articles()->create([
-			'title' => $request->title,
-			'description' => $request->description,
-			'body' => $request->body,
-			'image' => "storage/$path",
-			'category_id' => $request->category
-		]);
+		$article = $request->user()->articles()->create($request->validated());
 
 		if ($request->user()->can('moderate articles'))
 			$article->markApproved();

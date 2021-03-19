@@ -113,7 +113,7 @@ class ArticleTest extends TestCase
 			'description' => 'Sit et quas eligendi. At reprehenderit voluptas iste impedit. Libero maxime facilis blanditiis et id. Illo quae quis officiis ipsum vero vero consequatur hic. Mollitia animi explicabo sit qui tempore.',
 			'body' => 'Eos adipisci quis earum est. Veritatis impedit porro temporibus aperiam doloremque et. Aliquam quis ut est. Minus ipsum repellat ducimus dolores consequuntur repellendus earum. Omnis quidem voluptatem eum quo ut. Voluptatem soluta veritatis omnis quia optio. Aut magni praesentium atque minus. Est sit facilis magni et dolorum distinctio. Fuga consectetur perspiciatis voluptatibus. Consectetur eius perspiciatis vitae fugit omnis aut. Libero ea illum atque aut. Accusantium alias eaque omnis id quae voluptatem quisquam. Eos labore sunt voluptate id. Ut hic voluptas est omnis pariatur corporis et. Sit autem aliquam ducimus alias exercitationem iusto. Officia modi accusantium voluptas necessitatibus quis est eos. Et reprehenderit dolorem enim. Placeat voluptatem et odit.',
 			'image' => $file,
-			'category' => $category->id
+			'category_id' => $category->id
 		]);
 
 		$response
@@ -144,7 +144,7 @@ class ArticleTest extends TestCase
 			'description' => 'Sit et quas eligendi. At reprehenderit voluptas iste impedit. Libero maxime facilis blanditiis et id. Illo quae quis officiis ipsum vero vero consequatur hic. Mollitia animi explicabo sit qui tempore.',
 			'body' => 'Eos adipisci quis earum est. Veritatis impedit porro temporibus aperiam doloremque et. Aliquam quis ut est. Minus ipsum repellat ducimus dolores consequuntur repellendus earum. Omnis quidem voluptatem eum quo ut. Voluptatem soluta veritatis omnis quia optio. Aut magni praesentium atque minus. Est sit facilis magni et dolorum distinctio. Fuga consectetur perspiciatis voluptatibus. Consectetur eius perspiciatis vitae fugit omnis aut. Libero ea illum atque aut. Accusantium alias eaque omnis id quae voluptatem quisquam. Eos labore sunt voluptate id. Ut hic voluptas est omnis pariatur corporis et. Sit autem aliquam ducimus alias exercitationem iusto. Officia modi accusantium voluptas necessitatibus quis est eos. Et reprehenderit dolorem enim. Placeat voluptatem et odit.',
 			'image' => $file,
-			'category' => $category->id
+			'category_id' => $category->id
 		]);
 
 		$response
